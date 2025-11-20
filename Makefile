@@ -3,7 +3,9 @@ CC		:= cc
 CFLAGS	:= -Wall -Wextra -Werror -g3
 
 SRCS	:= \
-	main.c
+	srcs/main.c \
+	srcs/helper_functions.c \
+	srcs/write_functions.c
 OBJS	:= $(SRCS:.c=.o)
 INC		:= -I includes
 

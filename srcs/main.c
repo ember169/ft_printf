@@ -6,7 +6,7 @@
 /*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 15:30:51 by lgervet           #+#    #+#             */
-/*   Updated: 2025/11/20 14:33:51 by lgervet          ###   ########.fr       */
+/*   Updated: 2025/11/20 14:44:20 by lgervet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/header.h"
+#include "../includes/header.h"
 
 // \num    Write a byte whose value is the 1-,
 // 			2-, or 3-digit octal number num.
@@ -142,9 +142,9 @@ int	main(void)
 	ft_printf(" -> %d\n", i);
 	i = ft_printf("%%u: %u ", (unsigned int)8);
 	ft_printf(" -> %d\n", i);
-	i = ft_printf("%%x: %x ", 42);
+	i = ft_printf("%%x: %x ", 20000);
 	ft_printf(" -> %d\n", i);
-	i = ft_printf("%%X: %X ", 42);
+	i = ft_printf("%%X: %X ", 20000);
 	ft_printf(" -> %d\n", i);
 	return (0);
 }
