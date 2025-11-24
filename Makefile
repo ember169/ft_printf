@@ -1,28 +1,32 @@
 NAME	:= libftprintf.a
 CC		:= cc
 CFLAGS	:= -Wall -Wextra -Werror -g3
+AR		:= ar rcs
+RM		:= rm -f
+INCS	:= includes
 
 SRCS	:= \
-	srcs/main.c \
-	srcs/helper_functions.c \
-	srcs/write_functions.c
-OBJS	:= $(SRCS:.c=.o)
-INC		:= -I includes
+	srcs/ft_printf.c \
+	srcs/core/dispatch.c \
+	srcs/utils/write_basics.c \
+	srcs/utils/strings.c \
+	srcs/utils/numbers.c
 
+OBJS	:= $(SRCS:.c=.o)
 
 all: $(NAME)
 
-%.o: %.c $(INC)/header.h
-	$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
-
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(AR) $(NAME) $(OBJS)
+
+%.o: %.c $(INCS)/ft_printf.h
+	$(CC) $(CFLAGS) -I$(INCS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
 

@@ -1,47 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers_functions.c                                :+:      :+:    :+:   */
+/*   numbers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 13:31:46 by lgervet           #+#    #+#             */
-/*   Updated: 2025/11/20 14:44:21 by lgervet          ###   ########.fr       */
+/*   Updated: 2025/11/22 09:42:47 by lgervet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
+#include "../../includes/ft_printf.h"
 
-size_t	_ft_strlen(char *str)
+char	*str0(char *str)
 {
-	size_t	i;
-
-	i = 0;
-	while (*str++)
-		i++;
-	return (i);
-}
-
-char	*_ft_strrev(char *str)
-{
-	size_t	start;
-	size_t	end;
-	char	tmp;
-
-	start = 0;
-	end = _ft_strlen(str) - 1;
-	while (start < end)
-	{
-		tmp = str[start];
-		str[start] = str[end];
-		str[end] = tmp;
-		end --;
-		start++;
-	}
+	str[0] = '0';
+	str[1] = '\0';
 	return (str);
 }
 
-char	*_ft_itoa(int n, char *str, int base)
+char	*pf_itoa(int n, char *str, int base)
 {
 	int	i;
 	int	is_negative;
@@ -49,7 +27,7 @@ char	*_ft_itoa(int n, char *str, int base)
 	i = 0;
 	is_negative = 0;
 	if (n == 0)
-		return ("0");
+		return (str0(str));
 	if (n < 0)
 	{
 		if (base == 10)
@@ -67,29 +45,28 @@ char	*_ft_itoa(int n, char *str, int base)
 	if (is_negative)
 		str[i++] = '-';
 	str[i] = '\0';
-	return (_ft_strrev(str));
+	return (pf_strrev(str));
 }
 
-char	*_ft_toupper(char *str)
+char	*pf_uitoa(unsigned int n, char *str, int base)
 {
-	char	*dest;
-	int		i;
+	int	i;
+	int	is_negative;
 
-	dest = (char *)malloc((_ft_strlen(str) + 1) * sizeof(char));
 	i = 0;
-	while (str[i])
+	is_negative = 0;
+	if (n == 0)
+		return (str0(str));
+	while (n != 0)
 	{
-		if (str[i] >= 'a' && str[i] <= 'z')
-		{
-			dest[i] = str[i] - 32;
-			i++;
-		}
+		if ((n % base) > 9)
+			str[i++] = (((n % base) - 10) + 'a');
 		else
-		{
-			dest[i] = str[i];
-			i++;
-		}
+			str[i++] = ((n % base) + '0');
+		n = n / base;
 	}
-	dest[i] = '\0';
-	return (dest);
+	if (is_negative)
+		str[i++] = '-';
+	str[i] = '\0';
+	return (pf_strrev(str));
 }
