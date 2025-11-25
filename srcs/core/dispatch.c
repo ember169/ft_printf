@@ -6,7 +6,7 @@
 /*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 15:01:59 by lgervet           #+#    #+#             */
-/*   Updated: 2025/11/25 11:09:57 by lgervet          ###   ########.fr       */
+/*   Updated: 2025/11/25 13:27:23 by lgervet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,15 @@
 
 #include "../../includes/ft_printf.h"
 
-int	convert_char(char flag, va_list ap)
+int	convert_char(va_list *ap)
 {
 	unsigned char	arg;
 
-	arg = va_arg(ap, int);
-	if (flag == 'c' && arg)
-		return (pf_putchar(arg));
-	else
-		return (0);
+	arg = va_arg(*ap, int);
+	return (pf_putchar(arg));
 }
 
-int	convert_str(char flag, va_list ap)
+int	convert_str(char flag, va_list *ap)
 {
 	char	str[21];
 	char	*s;
@@ -42,56 +39,58 @@ int	convert_str(char flag, va_list ap)
 	count = 0;
 	if (flag == 's')
 	{
-		s = va_arg(ap, char *);
+		s = va_arg(*ap, char *);
 		if (!s)
 			return (pf_putstr("(null)"));
 		count += pf_putstr(s);
 	}
 	else if (flag == 'x')
 	{
-		pf_uitoa(va_arg(ap, unsigned int), str, 16);
+		pf_uitoa(va_arg(*ap, unsigned int), str, 16);
 		count += pf_putstr(str);
 	}
 	else if (flag == 'X')
 	{
-		pf_uitoa(va_arg(ap, unsigned int), str, 16);
+		pf_uitoa(va_arg(*ap, unsigned int), str, 16);
 		pf_toupper(str);
 		count += pf_putstr(str);
 	}
 	return (count);
 }
 
-int	convert_num(char flag, va_list ap)
+int	convert_num(char flag, va_list *ap)
 {
 	int					count;
+	void				*ptr;
 	unsigned long long	arg;
 	char				str[21];
 
 	count = 0;
 	if (flag == 'd')
-		count += pf_putnbr(va_arg(ap, int));
+		count += pf_putnbr(va_arg(*ap, int));
 	else if (flag == 'p')
 	{
-		arg = va_arg(ap, unsigned long long);
-		if (!arg)
-			return (pf_putstr("(nil)"));
+		ptr = va_arg(*ap, void *);
+		if (!ptr)
+			return (pf_putstr(NULL_PTR_STR));
+		arg = (unsigned long long)ptr;
 		pf_uitoa(arg, str, 16);
 		count += pf_printmemaddress(str);
 	}
 	else if (flag == 'i')
-		count += pf_putnbr(va_arg(ap, int));
+		count += pf_putnbr(va_arg(*ap, int));
 	else if (flag == 'u')
-		count += pf_uputnbr(va_arg(ap, unsigned int));
+		count += pf_uputnbr(va_arg(*ap, unsigned int));
 	return (count);
 }
 
-int	dispatch_conversion(char c, va_list ap)
+int	dispatch_conversion(char c, va_list *ap)
 {
 	int	count;
 
 	count = 0;
 	if (c == 'c')
-		count += convert_char(c, ap);
+		count += convert_char(ap);
 	else if (c == 's' || c == 'x' || c == 'X')
 		count += convert_str(c, ap);
 	else if (c == 'p')

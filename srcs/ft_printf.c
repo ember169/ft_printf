@@ -6,7 +6,7 @@
 /*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 15:30:51 by lgervet           #+#    #+#             */
-/*   Updated: 2025/11/21 10:23:42 by lgervet          ###   ########.fr       */
+/*   Updated: 2025/11/25 12:02:12 by lgervet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_printf(const char *str, ...)
 	while (*str)
 	{
 		if (*str == '%')
-			count += dispatch_conversion(*(++str), ap);
+			count += dispatch_conversion(*(++str), &ap);
 		else if (*str == '\\')
 			count += print_escape(*(++str));
 		else

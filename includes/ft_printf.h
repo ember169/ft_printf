@@ -6,12 +6,19 @@
 /*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:07:57 by lgervet           #+#    #+#             */
-/*   Updated: 2025/11/25 10:51:55 by lgervet          ###   ########.fr       */
+/*   Updated: 2025/11/25 13:26:56 by lgervet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+
+
+# ifdef __APPLE__
+#  define NULL_PTR_STR "0x0"
+# else
+#  define NULL_PTR_STR "(nil)"
+# endif
 
 // # include "libft.a"
 # include <unistd.h>
@@ -22,7 +29,7 @@
 # include <stdint.h>
 
 int		ft_printf(const char *str, ...);
-int		dispatch_conversion(char c, va_list ap);
+int		dispatch_conversion(char c, va_list *ap);
 int		pf_putchar(char c);
 int		pf_putstr(char *str);
 int		pf_putnbr(int n);
