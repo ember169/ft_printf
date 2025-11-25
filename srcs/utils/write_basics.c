@@ -6,7 +6,7 @@
 /*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:37:05 by lgervet           #+#    #+#             */
-/*   Updated: 2025/11/24 09:40:29 by lgervet          ###   ########.fr       */
+/*   Updated: 2025/11/25 11:10:39 by lgervet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int	pf_putchar(char c)
 {
-	write(1, &c, 1);
-	return (1);
+	return (write(1, &c, 1));
 }
 
 int	pf_putstr(char *str)
@@ -70,4 +69,14 @@ int	pf_uputnbr(unsigned int n)
 		count += pf_putchar('0' + (n % 10));
 	}
 	return (count);
+}
+
+int	pf_printmemaddress(char *str)
+{
+	int	i;
+
+	i = 0;
+	i += pf_putstr("0x");
+	i += pf_putstr(str);
+	return (i);
 }

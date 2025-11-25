@@ -6,7 +6,7 @@
 /*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 13:31:46 by lgervet           #+#    #+#             */
-/*   Updated: 2025/11/22 09:42:47 by lgervet          ###   ########.fr       */
+/*   Updated: 2025/11/25 10:50:23 by lgervet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ char	*pf_itoa(int n, char *str, int base)
 	return (pf_strrev(str));
 }
 
-char	*pf_uitoa(unsigned int n, char *str, int base)
+char	*pf_uitoa(unsigned long long n, char *str, int base)
 {
 	int	i;
-	int	is_negative;
 
 	i = 0;
-	is_negative = 0;
 	if (n == 0)
 		return (str0(str));
 	while (n != 0)
@@ -65,8 +63,6 @@ char	*pf_uitoa(unsigned int n, char *str, int base)
 			str[i++] = ((n % base) + '0');
 		n = n / base;
 	}
-	if (is_negative)
-		str[i++] = '-';
 	str[i] = '\0';
 	return (pf_strrev(str));
 }

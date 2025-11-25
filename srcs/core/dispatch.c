@@ -6,7 +6,7 @@
 /*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 15:01:59 by lgervet           #+#    #+#             */
-/*   Updated: 2025/11/24 09:43:10 by lgervet          ###   ########.fr       */
+/*   Updated: 2025/11/25 11:09:57 by lgervet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,13 @@
 
 int	convert_char(char flag, va_list ap)
 {
-	if (flag == 'c')
-		return (pf_putchar((unsigned char)va_arg(ap, int)));
-	return (0);
+	unsigned char	arg;
+
+	arg = va_arg(ap, int);
+	if (flag == 'c' && arg)
+		return (pf_putchar(arg));
+	else
+		return (0);
 }
 
 int	convert_str(char flag, va_list ap)
@@ -45,12 +49,12 @@ int	convert_str(char flag, va_list ap)
 	}
 	else if (flag == 'x')
 	{
-		pf_uitoa(va_arg(ap, int), str, 16);
+		pf_uitoa(va_arg(ap, unsigned int), str, 16);
 		count += pf_putstr(str);
 	}
 	else if (flag == 'X')
 	{
-		pf_uitoa(va_arg(ap, int), str, 16);
+		pf_uitoa(va_arg(ap, unsigned int), str, 16);
 		pf_toupper(str);
 		count += pf_putstr(str);
 	}
@@ -59,11 +63,21 @@ int	convert_str(char flag, va_list ap)
 
 int	convert_num(char flag, va_list ap)
 {
-	int	count;
+	int					count;
+	unsigned long long	arg;
+	char				str[21];
 
 	count = 0;
 	if (flag == 'd')
 		count += pf_putnbr(va_arg(ap, int));
+	else if (flag == 'p')
+	{
+		arg = va_arg(ap, unsigned long long);
+		if (!arg)
+			return (pf_putstr("(nil)"));
+		pf_uitoa(arg, str, 16);
+		count += pf_printmemaddress(str);
+	}
 	else if (flag == 'i')
 		count += pf_putnbr(va_arg(ap, int));
 	else if (flag == 'u')
@@ -81,7 +95,7 @@ int	dispatch_conversion(char c, va_list ap)
 	else if (c == 's' || c == 'x' || c == 'X')
 		count += convert_str(c, ap);
 	else if (c == 'p')
-		count += pf_putstr("TODO");
+		count += convert_num(c, ap);
 	else if (c == 'd' || c == 'i' || c == 'u')
 		count += convert_num(c, ap);
 	else if (c == '%')

@@ -6,7 +6,7 @@
 /*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:07:57 by lgervet           #+#    #+#             */
-/*   Updated: 2025/11/22 09:43:26 by lgervet          ###   ########.fr       */
+/*   Updated: 2025/11/25 10:51:55 by lgervet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ int		pf_putchar(char c);
 int		pf_putstr(char *str);
 int		pf_putnbr(int n);
 int		pf_uputnbr(unsigned int n);
+int		pf_printmemaddress(char *str);
 size_t	pf_strlen(char *str);
 char	*pf_strrev(char *str);
 char	*pf_itoa(int n, char *str, int base);
-char	*pf_uitoa(unsigned int n, char *str, int base);
+char	*pf_uitoa(unsigned long long n, char *str, int base);
 char	*pf_toupper(char *str);
 
 #endif
